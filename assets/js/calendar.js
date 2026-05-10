@@ -98,6 +98,7 @@
       if (pinInput.value === EDITOR_PIN) {
         editorForm.hidden = false;
         authForm.hidden = true;
+        renderDetails();
         setStatus("Editor unlocked.", "success");
         dateInput.focus();
         return;
