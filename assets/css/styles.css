@@ -1,0 +1,122 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  color: white;
+  font-family: "Courier New", monospace;
+  text-align: center;
+  text-shadow: 0 0 20px blue;
+  background-image: url("../images/background.png");
+  background-repeat: repeat;
+}
+
+.site-banner {
+  position: relative;
+  min-height: 44px;
+  padding: 10px;
+  overflow: hidden;
+  background: red;
+}
+
+.site-banner__text {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  display: inline-block;
+  color: black;
+  font-size: 20px;
+  line-height: 1.2;
+  text-shadow: none;
+  white-space: nowrap;
+  transform: translateY(-50%);
+  animation: banner-slide 8s linear infinite alternate;
+}
+
+.page {
+  padding: 0 1rem 3rem;
+}
+
+.site-logo {
+  width: min(100%, 700px);
+  height: auto;
+  margin-top: 40px;
+}
+
+.contact-form {
+  width: min(100%, 32rem);
+  margin: 2rem auto;
+}
+
+.form-field,
+.form-actions {
+  margin: 0 0 1rem;
+}
+
+.form-field label {
+  display: block;
+  color: white;
+  background-color: black;
+  margin-bottom: 0.35rem;
+}
+
+.form-field input,
+.form-field textarea {
+  width: 100%;
+  max-width: 100%;
+  padding: 0.5rem;
+  color: white;
+  font: inherit;
+  text-shadow: none;
+  background: rgba(255, 255, 224, 1);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+}
+
+.form-field textarea {
+  min-height: 8rem;
+  resize: vertical;
+}
+
+.form-actions button {
+  padding: 0.5rem 1rem;
+  font: inherit;
+  cursor: pointer;
+}
+
+.calendar-embed {
+  position: relative;
+  width: 80%;
+  max-width: 800px;
+  height: 0;
+  padding-bottom: 75%;
+  margin: 0 auto;
+}
+
+.calendar-embed__frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+@keyframes banner-slide {
+  from {
+    left: 0;
+    transform: translate(0, -50%);
+  }
+
+  to {
+    left: 100%;
+    transform: translate(-100%, -50%);
+  }
+}
