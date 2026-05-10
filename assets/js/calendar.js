@@ -14,6 +14,8 @@
   var events = [];
   var editingEventId = "";
   var pendingImage = "";
+  var isImageProcessing = false;
+  var imageRequestId = 0;
 
   var rangeEl = root.querySelector("[data-calendar-range]");
   var statusEl = root.querySelector("[data-calendar-status]");
@@ -32,6 +34,7 @@
   var titleInput = root.querySelector("[data-calendar-title]");
   var imageInput = root.querySelector("[data-calendar-image]");
   var previewEl = root.querySelector("[data-calendar-preview]");
+  var saveButton = root.querySelector("[data-calendar-save]");
   var newButton = root.querySelector("[data-calendar-new]");
   var deleteButton = root.querySelector("[data-calendar-delete]");
   var exportButton = root.querySelector("[data-calendar-export]");
@@ -115,25 +118,44 @@
 
     imageInput.addEventListener("change", function () {
       var file = imageInput.files && imageInput.files[0];
+      var requestId;
+
+      imageRequestId += 1;
+      requestId = imageRequestId;
 
       if (!file) {
+        setImageProcessing(false);
         return;
       }
 
       if (!file.type || file.type.indexOf("image/") !== 0) {
         imageInput.value = "";
+        setImageProcessing(false);
         setStatus("Choose an image file.", "error");
         return;
       }
 
+      setImageProcessing(true);
+      setStatus("Processing image.", "");
+
       imageFileToDataUrl(file)
         .then(function (dataUrl) {
+          if (requestId !== imageRequestId) {
+            return;
+          }
+
           pendingImage = dataUrl;
           renderPreview();
+          setImageProcessing(false);
           setStatus("Image ready.", "success");
         })
         .catch(function () {
+          if (requestId !== imageRequestId) {
+            return;
+          }
+
           imageInput.value = "";
+          setImageProcessing(false);
           setStatus("Image could not be loaded.", "error");
         });
     });
@@ -185,6 +207,11 @@
   function saveEvent() {
     var date = dateInput.value;
     var title = titleInput.value.trim();
+
+    if (isImageProcessing) {
+      setStatus("Wait for the image to finish processing.", "error");
+      return;
+    }
 
     if (!isDateKey(date)) {
       setStatus("Choose a valid date.", "error");
@@ -432,6 +459,8 @@
   }
 
   function resetEditor(dateKey) {
+    imageRequestId += 1;
+    setImageProcessing(false);
     editingEventId = "";
     pendingImage = "";
     eventIdInput.value = "";
@@ -449,6 +478,8 @@
       return;
     }
 
+    imageRequestId += 1;
+    setImageProcessing(false);
     editingEventId = eventItem.id;
     pendingImage = eventItem.image || "";
     eventIdInput.value = eventItem.id;
@@ -475,6 +506,14 @@
     image.alt = "";
     previewEl.appendChild(image);
     previewEl.hidden = false;
+  }
+
+  function setImageProcessing(isProcessing) {
+    isImageProcessing = isProcessing;
+
+    if (saveButton) {
+      saveButton.disabled = isProcessing;
+    }
   }
 
   function eventsForDate(dateKey) {

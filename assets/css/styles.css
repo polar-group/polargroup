@@ -165,6 +165,13 @@ body {
   outline-offset: 2px;
 }
 
+.calendar__button:disabled {
+  color: rgba(0, 0, 0, 0.58);
+  cursor: wait;
+  background: rgba(255, 255, 255, 0.55);
+  border-color: rgba(255, 255, 255, 0.45);
+}
+
 .calendar__button--active {
   color: white;
   background: blue;
