@@ -37,14 +37,65 @@
       </p>
     </form>
 
-    <div class="calendar-embed">
-      <iframe
-        class="calendar-embed__frame"
-        title="POLAR calendar"
-        src="https://calendar.google.com/calendar/embed?src=polargroupdotclub%40gmail.com&amp;ctz=America%2FToronto"
-        loading="lazy">
-      </iframe>
-    </div>
+    <section class="calendar" data-calendar aria-labelledby="calendar-heading">
+      <div class="calendar__topbar">
+        <div class="calendar__title-group">
+          <h2 id="calendar-heading" class="calendar__heading">Calendar</h2>
+          <p class="calendar__range" data-calendar-range aria-live="polite"></p>
+        </div>
+
+        <div class="calendar__controls" aria-label="Calendar controls">
+          <button class="calendar__button" type="button" data-calendar-prev aria-label="Previous period">&lt;</button>
+          <button class="calendar__button" type="button" data-calendar-today>Today</button>
+          <button class="calendar__button" type="button" data-calendar-next aria-label="Next period">&gt;</button>
+        </div>
+      </div>
+
+      <div class="calendar__view-toggle" role="group" aria-label="Calendar view">
+        <button class="calendar__button calendar__button--active" type="button" data-calendar-view="month">Month</button>
+        <button class="calendar__button" type="button" data-calendar-view="week">Week</button>
+      </div>
+
+      <div class="calendar__status" data-calendar-status aria-live="polite"></div>
+      <div class="calendar__weekdays" data-calendar-weekdays aria-hidden="true"></div>
+      <div class="calendar__grid" data-calendar-grid></div>
+
+      <div class="calendar__details" data-calendar-details></div>
+
+      <section class="calendar-editor" aria-labelledby="calendar-editor-heading">
+        <h3 id="calendar-editor-heading" class="calendar-editor__heading">Event Editor</h3>
+
+        <form class="calendar-editor__auth" data-calendar-auth>
+          <label class="calendar-editor__label" for="calendar-pin">PIN</label>
+          <input id="calendar-pin" class="calendar-editor__input" type="password" autocomplete="current-password" data-calendar-pin>
+          <button class="calendar__button" type="submit">Unlock</button>
+        </form>
+
+        <form class="calendar-editor__form" data-calendar-form hidden>
+          <input type="hidden" data-calendar-event-id>
+
+          <label class="calendar-editor__label" for="calendar-date">Date</label>
+          <input id="calendar-date" class="calendar-editor__input" type="date" required data-calendar-date>
+
+          <label class="calendar-editor__label" for="calendar-title">Event Name</label>
+          <input id="calendar-title" class="calendar-editor__input" type="text" maxlength="120" required data-calendar-title>
+
+          <label class="calendar-editor__label" for="calendar-image">Image</label>
+          <input id="calendar-image" class="calendar-editor__input" type="file" accept="image/*" data-calendar-image>
+
+          <div class="calendar-editor__preview" data-calendar-preview hidden></div>
+
+          <div class="calendar-editor__actions">
+            <button class="calendar__button" type="submit">Save Event</button>
+            <button class="calendar__button" type="button" data-calendar-new>New Event</button>
+            <button class="calendar__button calendar__button--danger" type="button" data-calendar-delete hidden>Delete</button>
+            <button class="calendar__button" type="button" data-calendar-export>Export events.json</button>
+          </div>
+        </form>
+      </section>
+    </section>
   </main>
+
+  <script src="assets/js/calendar.js" defer></script>
 </body>
 </html>
